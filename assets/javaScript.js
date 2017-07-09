@@ -1,20 +1,25 @@
-
+$( document ).ready(function() {
+    console.log( "ready!" );
+});
 
 
 var word = ["fruit",'apple','drinks', 'football', 'cat']; 
 var guess;
 var guessesLeft = 11;
 var rightGuesses;
-var computerWord;
+var computerWord = 'snake';
 var guessedLetters = [''];
+
 
 
 
 //word to be chosen
  function chooseWord () {
-	var computerWord = word[Math.floor(Math.random() * word.length)];
+	var computerWord = word[Math.floor(Math.random() * word.length)]
+  window.computerWord;
+  computerWord.toString();
 	console.log(computerWord);
-  return computerWord;
+  
 };
 
 chooseWord();
@@ -25,43 +30,45 @@ chooseWord();
         document.onkeyup = function (event) {
         var userGuess = event.key;
         guessedLetters.push(userGuess);
-        document.querySelector('#guessedLetters').innerHTML = "Guessed letters: " + userGuess;
+        $('#guessedLetters').append(" " + userGuess);
         document.querySelector('#guessesLeft').innerHTML = "Guesses Left: " + guessesLeft;
         guessesLeft--;
-        return userGuess;
+       
+        console.log(userGuess);
+     
+
+       
         
 
-        // console.log(computerWord);
-        // console.log(guessesLeft);
-        logic();
-      };
-        
 
 
 
 
 
-//display the dashes for the number of letters
 
 //
 
 //logic
 
-function logic(){
+
 for(i = 0; i <= word.length; i++) {
-  document.querySelector('#rightGuesses').text = '_';
-};
+  console.log(word.length);
+  console.log(computerWord.length);
+  document.querySelector('#rightGuesses').innerHTML = '_';
+
 
 
 for (i = 0; i <= word.length; i++){
 
 
   for (j =0; j <= guessesLeft; j++) {
+ //display the dashes for the number of letters
 
-	if (userGuess === indexOf.computerWord){
+
+	if (userGuess.includes(computerWord)){
 		//add letter to word
 		document.querySelector('#rightGuesses').innerHTML = "" + rightGuesses;
-		console.log(guess);
+		console.log(rightGuesses);
 	 }
 
     //if you already guessed a letter
@@ -78,8 +85,9 @@ for (i = 0; i <= word.length; i++){
   };
 };
 };
+};
 
-	
+
   
 
 //reset the game
