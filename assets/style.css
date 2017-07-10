@@ -22,3 +22,8 @@ p {
 h2 {
 	color: black;
 }
+
+button {
+	text-align: center;
+	margin-left: 50%;
+}
