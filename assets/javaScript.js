@@ -1,111 +1,113 @@
 $( document ).ready(function() {
     console.log( "ready!" );
-});
+
+//global variables
+//---------------------------------------------------------------------
+//arrarys for hodling datat
+var wordOptions = ['sheriff','hangman','general', "major", "daisy" , 'bob' , "oswaldo" , "joe"];
+var selectedWord = "";
+var lettersInWord = [];
+var numBlanks = 0;
+var blanksAndSuccesses = [];
+var wrongLetters = [];
+var winCount = 0;
+var lossCount = 0;
+var guessesLeft = 9;
 
 
-var randomWordArr= ["fruit",'apple','drinks', 'football', 'cat']; 
-var guess;
-var guessesLeft = 11;
-var computerWord;
-var guessedLetters = [];
-var correctGuesses = [];
-var guesses = [];
+//functions
+//---------------------------------------------------------------------
 
-var s;
-var count = 0;
-var answerArray = [];
-
-
-
-
-//word to be chosen
- 
-	var randomWord = randomWordArr[Math.floor(Math.random() * randomWordArr.length)]
-  console.log(randomWord);
-
-
-  document.onkeyup = function(event){
-    var userGuess = event.key;
-    guesses.push(userGuess);
-    console.log(userGuess);     
-    console.log(guesses);
-
-  }     
-        
-for(i= 0 ; i < randomWord.length; i++){
-  $('#rightGuesses').append(' _ ');
-}
-//reset the game
-document.querySelector('button').addEventListener('click', function(){
-
- var randomWord = randomWordArr[Math.floor(Math.random() * randomWordArr.length)]
-  console.log(randomWord);
-document.querySelector('#guessedLetters').innerHTML = "Guessed letters:";
- });
-
-
-
-
-
-for (i = 0; i <= randomWord.length; i++){
-
-     document.onkeyup = function (event) {
-        var userGuess = event.key;
-        guessedLetters.push(userGuess);
-        $('#guessedLetters').append(" " + userGuess);
-        document.querySelector('#guessesLeft').innerHTML = "Guesses Left: " + guessesLeft;
-        
-       
-        console.log(userGuess);
-
-
-  // for (j =0; j <= guessesLeft; j++) {
- //display the dashes for the number of letters
-
-
-	if (randomWord.includes(userGuess)){
-		//add letter to word
-    // var right = userGuess;
-		$('#rightGuesses').append(userGuess);
-    correctGuesses.push(userGuess);
-    console.log(correctGuesses);
+function startGame() {
+  selectedWord = wordOptions[Math.floor(Math.random() * wordOptions.length)];
+    console.log(selectedWord);
+    lettersInWord = selectedWord.split("");
     
-
-     if (correctGuesses === randomWord);
-     alert("you won the game");
-		// console.log(right);
-    reset();
-
-	 } 
-
-   //does not include?!?
-   else if(randomWord){
-
-   }
-
-    //if you already guessed a letter
-    else if (userGuess.includes(randomWord)) {
-      alert('You aleady Guessed that one ');
-      console.log(guessedLetters);
-    }
-
-    else {
-      guessesLeft--;
-      console.log(guessesLeft);
-      document.querySelector('#guessedLetters').innerHTML = "Guessed Letters: " + guessedLetters;
-      if (guessesLeft == 0){
-        alert('Try again');
-        reset();
-      }
-	  };
-  };
-};
-
-
-
+    numBlanks = lettersInWord.length;
   
 
-//reset the game
+    //reset
+    guessesLeft = 9;
+    wrongLetters = [];
+    blanksAndSuccesses = [];
+
+    for(var i = 0; i < numBlanks; i++){
+      blanksAndSuccesses.push(' _ ');
+      
+    }
+
+    document.getElementById("wordToGuess").innerHTML = blanksAndSuccesses.join(" ");
+    document.getElementById("numGuesses").innerHTML = guessesLeft;
+    document.getElementById("winCounter").innerHTML = winCount;
+    document.getElementById("lossCounter").innerHTML = lossCount;
+
+}
+
+function checkLetters(letter) {
+  var isLetterInWord = false;
+
+  for(i = 0; i < numBlanks; i++) {
+    if(selectedWord[i] == letter) {
+      isLetterInWord = true;
+    }
+  }
+  if(isLetterInWord) {
+  for (var i = 0; i<numBlanks; i++){
+    if(selectedWord[i] == letter) {
+      blanksAndSuccesses[i] = letter;
+    }
+  }
+}
+
+else {
+  wrongLetters.push(letter);
+  guessesLeft--;
+}
+ console.log(blanksAndSuccesses);
+  
+}
+
+function roundComplete() {
+
+
+  document.getElementById("numGuesses").innerHTML = guessesLeft;
+  document.getElementById("wordToGuess").innerHTML = blanksAndSuccesses.join(" ");
+  document.getElementById("wrongGuesses").innerHTML = wrongLetters.join(" ");
+
+
+  if (lettersInWord.toString() == blanksAndSuccesses.toString()) {
+    winCount++
+    alert("You Won!");
+    document.getElementById("winCounter").innerHTML = winCount;
+    startGame();
+  }
+  else if (guessesLeft == 0) {
+    lossCount++;
+    alert("You Lost");
+    document.getElementById("lossCounter").innerHTML = lossCount;
+    startGame();
+  }
+
+
+}
+
+//main process
+
+//---------------------------------------------------------------------
+startGame();
+
+
+document.onkeyup = function(event){
+  var letterGuessed = String.fromCharCode(event.keyCode).toLowerCase();
+  checkLetters(letterGuessed);
+  console.log(letterGuessed);
+  roundComplete();
+  
+}
+
+});  
+
+
 
 
 

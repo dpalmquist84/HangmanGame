@@ -1,5 +1,6 @@
 body {
 	background-color: #edecea;
+	background-image: url("https://myclone.files.wordpress.com/2011/02/home-hangman-photoshopped.jpg");
 }
 img{
 	float: left;
@@ -25,5 +26,5 @@ h2 {
 
 button {
 	text-align: center;
-	margin-left: 50%;
+	
 }
