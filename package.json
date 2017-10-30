@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/dpalmquist84/HangmanGame/issues"
   },
-  "homepage": "https://github.com/dpalmquist84/HangmanGame#readme"
+  "homepage": "https://github.com/dpalmquist84/HangmanGame#readme",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
 }
